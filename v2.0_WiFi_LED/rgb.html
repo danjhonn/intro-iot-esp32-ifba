@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ESP32</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    html { font-family: Helvetica; display: inline-block; margin: 0px auto; text-align: center;}
+
+    .slidecontainer {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    width: 100%; /* Width of the outside container */
+    }
+
+    /* The slider itself */
+    .slider {
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    width: 50%; /* Full-width */
+    height: 15px; /* Specified height */
+    border-radius: 15px;
+    background: #d3d3d3; /* Grey background */
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+    }
+
+    /* Mouse-over effects */
+    .slider:hover {
+    opacity: 1; /* Fully shown on mouse-over */
+    }
+
+    /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+    .slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    border-radius: 50%;
+    background: #4CAF50; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+    }
+
+    .slider::-moz-range-thumb {
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    border-radius: 50%;
+    background: #4CAF50; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+    }
+</style>
+</head>
+<body>
+<h1>Introdu&ccedil&atildeo &agrave Internet das Coisas Usando ESP32</h1>
+
+<h5 style="margin-top:50px;">Mova os controles deslizantes para variar a cor do LED</h5>
+
+<div class="text" style="margin-top:40px;">
+    <output type="text" id="values">
+</div>
+
+<div class="slidecontainer">
+    <input oninput="requisicaoHTTP('R',this.value); atualizaTexto();" type="range" min="0" max ="256" value="0" class="slider" id="RAdjust">
+</div>
+
+<div class="slidecontainer">
+    <input oninput="requisicaoHTTP('G',this.value); atualizaTexto();" type="range" min="0" max ="256" value="0" class="slider" id="GAdjust">
+</div>
+
+<div class="slidecontainer">
+    <input oninput="requisicaoHTTP('B',this.value); atualizaTexto();" type="range" min="0" max ="256" value="0" class="slider" id="BAdjust">
+</div>
+
+<div class="text">
+    <output type="text" id="textV">
+</div>
+
+<script>
+var R = document.getElementById("RAdjust");
+var G = document.getElementById("GAdjust");
+var B = document.getElementById("BAdjust");
+var values = document.getElementById("values");
+
+atualizaTexto();
+
+function atualizaTexto(){
+    values.innerHTML = "R: " + R.value + " G: " + G.value + " B: " + B.value;
+}
+
+function requisicaoHTTP(color, value){
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("GET", color + value, true);
+    xhttp.send();
+}
+</script>
+
+</body>
+</html>
